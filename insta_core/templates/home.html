@@ -29,19 +29,19 @@
                         <div class="menu">
                             <ul>
                                 <li>
-                                    <a class="active" href="home.html">
+                                    <a class="active" href="{% url 'home-url' %}">
                                         <img src="{% static 'images/accueil.png' %}">
                                         <span class="d-none d-lg-block ">Home</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{% static 'reels.html">
+                                    <a href="{% url 'home-url' %}">
                                         <img src="{% static 'images/video.png' %}">
                                         <span class="d-none d-lg-block ">Reels</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{% static 'messages.html">
+                                    <a href="{% url 'home-url' %}">
                                         <img src="{% static 'images/send.png' %}">
                                         <span class="d-none d-lg-block ">Messages</span>
                                     </a>
@@ -53,13 +53,17 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{% static 'profile.html">
+                                    <a href="{% url 'profile-url' %}">
                                         <img class="circle story" src="{% static 'images/profile_img.jpg' %}">
                                         <span class="d-none d-lg-block ">Profile</span>
                                     </a>
                                 </li>
                             </ul>
                         </div>
+                        <form action="{% url 'logout-url' %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit">logout</button>
+                    </form>
                     </div>
                     <!-- nav for small screen  -->
                     <div class="nav_sm">
@@ -373,11 +377,25 @@
                                     </div>
                                     <div class="post_desc">
                                         <p>
-                                            <a class="bold" href="#">zineb</a> {{ item.description }}
+                                            <a class="bold" href="#">{{item.author.username}}</a> {{ item.description }}
                                         </p>
-                                        <p>
-                                            <a class="gray" href="#">View all 2 comments</a>
-                                        </p>
+                                        {% for comment in item.comments_to_show %}
+                                            <div class="d-flex">
+                                                <div class="content">
+                                                    <div class="person">
+                                                        <h4>{{ comment.user.first_name }}</h4>
+                                                        <span>{{ comment.created_at }}</span>
+                                                    </div>
+                                                    <p>{{ comment.text }}</p>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                             {% if item.comments_publications.count > 3 %}
+                                                <form method="get" action="{% url 'home-url' %}">
+                                                    <input type="hidden" name="show_all" value="{{ item.id }}">
+                                                    <button type="submit">  Показать все {{item.comments_publications.count}} комментарии</button>
+                                                </form>
+                                            {% endif %}
                                         <form action="{% url 'send-comment' item.id %}" method="post">
                                             {% csrf_token %}
                                             <input type="text" name="comment" placeholder="Add a comments...">
@@ -513,10 +531,10 @@
                                         </div>
                                         <div class="content">
                                             <div class="person">
-                                                <h4>namePerson</h4>
+                                                <h4></h4>
                                                 <span>3j</span>
                                             </div>
-                                            <p>Wow amzing shot</p>
+                                            <p></p>
                                         </div>
                                     </div>
                                 </div>
@@ -525,13 +543,8 @@
                         <div class="modal-footer">
                             <form method="post">
                                 <div class="input">
-                                   <form method="POST" action="/publication/{{ publication.pk }}/send-comment/">
-
-                                        {% csrf_token %}
                                         <img src="{% static 'images/profile_img.jpg' %}" alt="">
                                         <input type="text" id="emoji_comment" placeholder="Add a comment..." />
-                                        <input type="submit" value=""SEND>
-                                    </form>
                                 </div>
                                 <!-- <div class="emogi"><img src="{% static 'images/emogi.png' %}" alt=""></div> -->
                             </form>

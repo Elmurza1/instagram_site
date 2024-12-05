@@ -19,7 +19,7 @@ from django.conf.urls.static import static
 from django.conf.urls.static import settings
 from django.urls import path
 from insta.views import  HomeView, AddLike, MakePostView, SendCommentView
-from users.views import UserRegisterView, ProfileView, MakeRegisterView, LoginView, MakeLoginView, MakeFollowView
+from users.views import UserRegisterView, ProfileView, MakeRegisterView, LoginView, MakeLoginView, MakeFollowView, MakeLogoutView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -32,7 +32,8 @@ urlpatterns = [
     path('make-follow-url/<int:pk>/', MakeFollowView.as_view(), name='make-follow'),
     path('add-like/<int:pk>/', AddLike.as_view(), name='add-like'),
     path('make-post-url/', MakePostView.as_view(), name='make-post'),
-    path('publication/<int:pk>/send-comment', SendCommentView.as_view(), name='send-comment')
+    path('publication/<int:pk>/send-comment', SendCommentView.as_view(), name='send-comment'),
+    path('logout-list/', MakeLogoutView.as_view(), name='logout-url')
 
 ]
 

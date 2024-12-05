@@ -1,4 +1,4 @@
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from django.shortcuts import render, redirect
 from django.views import View
 from django.views.generic import TemplateView
@@ -9,6 +9,7 @@ from users.models import CustomUser, Follow
 
 # Create your views here.
 class UserRegisterView(TemplateView):
+    """" вью для регистрации пользователя """
     template_name = 'sign_up.html'
 
 
@@ -38,6 +39,8 @@ class ProfileView(TemplateView):
         }
         return context
 
+
+
 class MakeRegisterView(View):
     """Вьюшка для регистрации пользователя"""
     def post(self, request, *args, **kwargs):
@@ -60,6 +63,8 @@ class MakeRegisterView(View):
             return redirect('home-url')
         except IntegrityError:
             return redirect('register-url')
+
+
 
 class LoginView(TemplateView):
     """Вьюшка для входа в аккаунт"""
@@ -85,6 +90,9 @@ class MakeLoginView(View):
         else:
             return redirect('login-url')
 
+
+
+
 class MakeFollowView(View):
     """ вью для подписки """
     def post(self, request, *args, **kwargs):
@@ -102,8 +110,14 @@ class MakeFollowView(View):
 
 
 
-        return redirect('profile-url',)
+        return redirect('home-url',)
 
 
+
+class MakeLogoutView(View):
+    """ вью для выхода из аккаунта """
+    def post(self, request, *args, **kwargs):
+        logout(request)
+        return redirect('login-url')
 
 

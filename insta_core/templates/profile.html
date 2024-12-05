@@ -29,40 +29,43 @@
                         </a>
                     </div>
                     <div class="menu">
-                        <ul>
-                            <li>
-                                <a class="active" href="home.html">
-                                    <img src="{% static 'images/accueil.png' %}">
-                                    <span class="d-none d-lg-block ">Home</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="./reels.html">
-                                    <img src="{% static 'images/video.png' %}">
-                                    <span class="d-none d-lg-block ">Reels</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="./messages.html">
-                                    <img src="{% static 'images/send.png' %}">
-                                    <span class="d-none d-lg-block ">Messages</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" data-bs-toggle="modal" data-bs-target="#create_modal">
-                                    <img src="{% static 'images/tab.png' %}">
-                                    <span class="d-none d-lg-block ">Create</span>
-                                </a>
-
-                            </li>
-                            <li>
-                                <a href="./profile.html">
-                                    <img class="circle story" src="{% static 'images/profile_img.jpg' %}">
-                                    <span class="d-none d-lg-block ">Profile</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                            <ul>
+                                <li>
+                                    <a class="active" href="{% url 'home-url' %}">
+                                        <img src="{% static 'images/accueil.png' %}">
+                                        <span class="d-none d-lg-block ">Home</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'home-url' %}">
+                                        <img src="{% static 'images/video.png' %}">
+                                        <span class="d-none d-lg-block ">Reels</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'profile-url' %}">
+                                        <img src="{% static 'images/send.png' %}">
+                                        <span class="d-none d-lg-block ">Messages</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" data-bs-toggle="modal" data-bs-target="#create_modal">
+                                        <img src="{% static 'images/tab.png' %}">
+                                        <span class="d-none d-lg-block ">Create</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'profile-url' %}">
+                                        <img class="circle story" src="{% static 'images/profile_img.jpg' %}">
+                                        <span class="d-none d-lg-block ">Profile</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    <form action="{% url 'logout-url' %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit">logout</button>
+                    </form>
                 </div>
                 <!-- nav for small screen  -->
                 <div class="nav_sm">
