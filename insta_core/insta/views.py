@@ -38,17 +38,12 @@ class HomeView(TemplateView):
             )
         )
 
-        # Получаем параметр show_all из строки запроса
         show_all = self.request.GET.get('show_all')
-
-        # Логика для обработки комментариев
         for publication in publications:
             if show_all and str(publication.id) == show_all:
-                # Если show_all передан в URL и соответствует публикации, показываем все комментарии
                 publication.comments_to_show = publication.comments_publications.all()
             else:
-                # Иначе, показываем только первые три комментария
-                publication.comments_to_show = publication.comments_publications.all()[:3]  # Только 3 комментария
+                publication.comments_to_show = publication.comments_publications.all()[:3]
 
         context.update({
             'user': users,
